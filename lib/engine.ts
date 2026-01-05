@@ -125,8 +125,16 @@ export function scoreRisk(answers: Answers): { score: number; level: "ä½Ž" | "ä¸
 }
 
 export function scoreTypes(answers: Answers): { scores: Record<TypeName, number>; reasons: Record<TypeName, string[]> } {
-  const scores = Object.fromEntries(TYPES.map((t) => [t, 0])) as Record<TypeName, number>;
-  const reasons = Object.fromEntries(TYPES.map((t) => [t, []])) as Record<TypeName, string[]>;
+  const scores: Record<TypeName, number> = TYPES.reduce((acc, t) => {
+   acc[t] = 0;
+   return acc;
+   }, {} as Record<TypeName, number>);
+
+  const reasons: Record<TypeName, string[]> = TYPES.reduce((acc, t) => {
+   acc[t] = [];
+   return acc;
+   }, {} as Record<TypeName, string[]>);
+
 
   const q3 = new Set(asList(answers.Q3));
   const q4 = String(answers.Q4 ?? "");
